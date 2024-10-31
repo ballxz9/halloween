@@ -1,55 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Halloween Day</title>
-    <style>
-        /* ทำให้วิดีโอเต็มหน้าจอ */
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
+<style>
+    /* ทำให้วิดีโอเต็มหน้าจอ */
+    body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
 
-        .video-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-        }
+    .video-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+    }
 
-        .content {
-            position: relative;
-            z-index: 1;
-            color: white;
-            text-align: center;
-            padding-top: 20%;
-        }
-    </style>
+    .content {
+        position: relative;
+        z-index: 1;
+        color: white;
+        text-align: center;
+        padding-top: 20%;
+    }
+</style>
 </head>
 <body>
 
-    <!-- วิดีโอพื้นหลัง -->
-    <video id="bgVideo" class="video-bg" autoplay>
-        <source src="HAHAHAHAHAHAAAAAAA.mp4" type="video/mp4">
-        <source src="HAHAHAHAHAHAAAAAAA.webm" type="video/webm">
-        Browser does not support the video tag.
-    </video>
+<!-- วิดีโอพื้นหลัง -->
+<video id="bgVideo" class="video-bg" autoplay muted playsinline>
+    <source src="HAHAHAHAHAHAAAAAAA.mp4" type="video/mp4">
+    <source src="HAHAHAHAHAHAAAAAAA.webm" type="video/webm">
+    Browser does not support the video tag.
+</video>
 
 
-    <script>
-        const video = document.getElementById("bgVideo");
+<script>
+    const video = document.getElementById("bgVideo");
 
-        // ตั้งค่าเสียงดังสุดและปิด mute
-        video.muted = false;
-        video.volume = 1.0;
-    </script>
+    // ตั้งค่าให้เสียงดังที่สุดและปิด mute (หากเบราว์เซอร์อนุญาต)
+    video.muted = false;
+    video.volume = 1.0;
+
+    // พยายามเล่นวิดีโออัตโนมัติ
+    video.play().catch(error => {
+        console.error("Autoplay failed:", error);
+        // ลองอีกครั้งเมื่อมีการโต้ตอบ
+        document.addEventListener("click", () => {
+            video.play();
+        });
+    });
+</script>
 
 </body>
 </html>
