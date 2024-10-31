@@ -1,58 +1,82 @@
-<style>
-    /* ทำให้วิดีโอเต็มหน้าจอ */
-    body, html {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video with Popup Control</title>
+    <style>
+        /* ทำให้ iframe เต็มหน้าจอ */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+        }
 
-    .video-bg {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: -1;
-    }
+        .video-embed {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none; /* ซ่อน iframe วิดีโอในตอนแรก */
+        }
 
-    .content {
-        position: relative;
-        z-index: 1;
-        color: white;
-        text-align: center;
-        padding-top: 20%;
-    }
-</style>
+        /* สไตล์ของป๊อปอัป */
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.5em;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .popup button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
 
-<!-- วิดีโอพื้นหลัง -->
-<video id="bgVideo" class="video-bg" autoplay muted playsinline>
-    <source src="HAHAHAHAHAHAAAAAAA.mp4" type="video/mp4">
-    <source src="HAHAHAHAHAHAAAAAAA.webm" type="video/webm">
-    Browser does not support the video tag.
-</video>
+    <!-- iframe สำหรับวิดีโอ YouTube -->
+    <iframe id="youtubeVideo" class="video-embed" 
+        src="https://www.youtube.com/embed/Tokh49FTcU4?enablejsapi=1" 
+        allow="autoplay; encrypted-media">
+    </iframe>
 
+    <!-- ป๊อปอัปให้ผู้ใช้กดเพื่อเริ่มวิดีโอ -->
+    <div class="popup" id="popup">
+        <div>
+            <img src="halloween.jpg" alt="Girl in a jacket" width="600" height="250"><br>
+            <button onclick="playVideo()">Click To Hallween Day</button>
+        </div>
+    </div>
 
-<script>
-    const video = document.getElementById("bgVideo");
+    <script>
+        const video = document.getElementById("youtubeVideo");
+        const popup = document.getElementById("popup");
 
-    // ตั้งค่าให้เสียงดังที่สุดและปิด mute (หากเบราว์เซอร์อนุญาต)
-    video.muted = false;
-    video.volume = 1.0;
-
-    // พยายามเล่นวิดีโออัตโนมัติ
-    video.play().catch(error => {
-        console.error("Autoplay failed:", error);
-        // ลองอีกครั้งเมื่อมีการโต้ตอบ
-        document.addEventListener("click", () => {
-            video.play();
-        });
-    });
-</script>
+        function playVideo() {
+            // อัปเดตลิงก์ YouTube พร้อมพารามิเตอร์ autoplay
+            video.src = "https://www.youtube.com/embed/Tokh49FTcU4?autoplay=1";
+            video.style.display = "block";  // แสดง iframe วิดีโอ
+            popup.style.display = "none";   // ซ่อนป๊อปอัป
+        }
+    </script>
 
 </body>
 </html>
